@@ -1,6 +1,8 @@
+import { EmptyExpression } from "./empty-expression";
 import { Expression } from "./expression";
 import { NullExpression } from "./null-expression";
 import { ProdExpression } from "./prod-expression";
+import { StarExpression } from "./star-expression";
 
 export class SumExpression extends Expression {
 
@@ -59,6 +61,9 @@ export class SumExpression extends Expression {
 			return NullExpression.get();
 		}
 		let unique = SumExpression.uniqueTerms(tab);
+		if(unique.some(e => e instanceof StarExpression)) {
+			unique = unique.filter(e => !(e instanceof EmptyExpression));
+		}
 		if(unique.length == 1) {
 			return unique[0];
 		}

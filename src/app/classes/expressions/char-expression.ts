@@ -13,4 +13,8 @@ export class CharExpression extends Expression {
 		return this.name;
 	}
 
+	protected sortFactor(): number {
+		return 2;
+	}
+
 }

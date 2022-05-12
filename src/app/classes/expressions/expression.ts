@@ -6,4 +6,10 @@ export abstract class Expression {
 		return this;
 	}
 
+	protected abstract sortFactor(): number;
+
+	public compareTo(e: Expression): number {
+		return this.sortFactor() - e.sortFactor();
+	}
+
 }

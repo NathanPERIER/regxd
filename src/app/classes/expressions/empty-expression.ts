@@ -16,4 +16,8 @@ export class EmptyExpression extends Expression {
 		return "1";
 	}
 
+	protected sortFactor(): number {
+		return 1;
+	}
+
 }

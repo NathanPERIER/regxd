@@ -4,7 +4,7 @@ import { NullExpression } from "./null-expression";
 
 export class StarExpression extends Expression {
 
-	private readonly expr: Expression;
+	protected readonly expr: Expression;
 
 	public constructor(e: Expression) {
 		super();
@@ -31,6 +31,19 @@ export class StarExpression extends Expression {
 			return e;
 		}
 		return new StarExpression(e);
+	}
+
+	protected sortFactor(): number {
+		return 5;
+	}
+
+	public compareTo(e: Expression): number {
+		const diff = super.compareTo(e);
+		if(diff != 0) {
+			return diff;
+		}
+		let se = e as StarExpression;
+		return this.expr.compareTo(se.expr);
 	}
 
 }

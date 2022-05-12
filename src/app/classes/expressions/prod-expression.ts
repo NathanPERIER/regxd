@@ -5,8 +5,8 @@ import { SumExpression } from "./sum-expression";
 
 export class ProdExpression extends Expression {
 
-	private readonly left: Expression;
-	private readonly right: Expression;
+	protected readonly left: Expression;
+	protected readonly right: Expression;
 
 	public constructor(l: Expression, r: Expression) {
 		super();
@@ -48,6 +48,23 @@ export class ProdExpression extends Expression {
 			return r;
 		}
 		return new ProdExpression(l, r);
+	}
+
+	protected sortFactor(): number {
+		return 3;
+	}
+
+	public compareTo(e: Expression): number {
+		let diff = super.compareTo(e);
+		if(diff != 0) {
+			return diff;
+		}
+		let pe = e as ProdExpression;
+		diff = this.left.compareTo(pe.left);
+		if(diff != 0) {
+			return diff;
+		}
+		return this.right.compareTo(pe.right);
 	}
 
 }

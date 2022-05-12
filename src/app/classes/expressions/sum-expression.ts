@@ -3,7 +3,7 @@ import { NullExpression } from "./null-expression";
 
 export class SumExpression extends Expression {
 
-	private readonly terms: Expression[];
+	protected readonly terms: Expression[];
 
 	public constructor(exprs: Expression[]) {
 		super();
@@ -47,6 +47,26 @@ export class SumExpression extends Expression {
 			return unique[0];
 		}
 		return new SumExpression(unique);
+	}
+
+	protected sortFactor(): number {
+		return 4;
+	}
+
+	public compareTo(e: Expression): number {
+		let diff = super.compareTo(e);
+		if(diff != 0) {
+			return diff;
+		}
+		let se = e as SumExpression;
+		const size = Math.min(this.terms.length, se.terms.length);
+		for(let i = 0; i < size; i++) {
+			diff = this.terms[i].compareTo(se.terms[i]);
+			if(diff != 0) {
+				return diff;
+			}
+		}
+		return this.terms.length - se.terms.length;
 	}
 
 }

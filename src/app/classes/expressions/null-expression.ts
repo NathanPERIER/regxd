@@ -17,4 +17,8 @@ export class NullExpression extends Expression {
 		return "0";
 	}
 
+	protected sortFactor(): number {
+		return 0;
+	}
+
 }

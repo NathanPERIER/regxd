@@ -1,4 +1,5 @@
 import { Expression } from "./expression";
+import { NullExpression } from "./null-expression";
 
 export class EmptyExpression extends Expression {
 
@@ -22,6 +23,10 @@ export class EmptyExpression extends Expression {
 
 	public nullable(): boolean {
 		return true;
+	}
+
+	public partialDerivate(c: string): Expression {
+		return NullExpression.get();
 	}
 
 }

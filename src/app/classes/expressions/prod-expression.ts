@@ -23,14 +23,14 @@ export class ProdExpression extends Expression {
 	}
 
 	public toString(): string {
-		let res = this.right.toString()
-		if(this.right instanceof SumExpression || this.right instanceof ProdExpression) {
+		let res = this.left.toString()
+		if(this.left instanceof SumExpression || this.left instanceof ProdExpression) {
 			res = "(" + res + ")";
 		}
-		if(this.left instanceof SumExpression) {
-			res += "(" + this.left.toString() + ")";
+		if(this.right instanceof SumExpression) {
+			res += "(" + this.right.toString() + ")";
 		} else {
-			res += this.left.toString();
+			res += this.right.toString();
 		}
 		return res;
 	}
@@ -92,6 +92,14 @@ export class ProdExpression extends Expression {
 
 	public nullable(): boolean {
 		return this.left.nullable() && this.right.nullable();
+	}
+
+	public partialDerivate(c: string): Expression {
+		let prod = new ProdExpression(this.left.partialDerivate(c), this.right);
+		if(this.left.nullable()) {
+			return new SumExpression([prod, this.right.partialDerivate(c)])
+		}
+		return prod;
 	}
 
 }

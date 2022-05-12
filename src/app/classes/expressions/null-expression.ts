@@ -21,4 +21,8 @@ export class NullExpression extends Expression {
 		return 0;
 	}
 
+	public partialDerivate(c: string): Expression {
+		return this;
+	}
+
 }

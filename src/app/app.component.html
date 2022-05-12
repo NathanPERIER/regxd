@@ -1,3 +1,9 @@
 Expression : {{expr.toString()}}
 <br/>
 Simplified : {{simple.toString()}}
+
+<br/><br/>
+
+Derivation wrt a : {{simple.partialDerivate('a').simplify().toString()}}
+<br/>
+Derivation wrt b : {{simple.partialDerivate('b').simplify().toString()}}

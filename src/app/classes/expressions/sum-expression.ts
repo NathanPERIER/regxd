@@ -2,7 +2,6 @@ import { EmptyExpression } from "./empty-expression";
 import { Expression } from "./expression";
 import { NullExpression } from "./null-expression";
 import { ProdExpression } from "./prod-expression";
-import { StarExpression } from "./star-expression";
 
 export class SumExpression extends Expression {
 
@@ -79,10 +78,12 @@ export class SumExpression extends Expression {
 		if(diff != 0) {
 			return diff;
 		}
-		let se = e as SumExpression;
-		const size = Math.min(this.terms.length, se.terms.length);
+		const se = e as SumExpression;
+		const t1 = this.terms.sort(Expression.COMPARE);
+		const t2 = se.terms.sort(Expression.COMPARE);
+		const size = Math.min(t1.length, t2.length);
 		for(let i = 0; i < size; i++) {
-			diff = this.terms[i].compareTo(se.terms[i]);
+			diff = t1[i].compareTo(t2[i]);
 			if(diff != 0) {
 				return diff;
 			}
@@ -104,6 +105,10 @@ export class SumExpression extends Expression {
 
 	public nullable(): boolean {
 		return this.terms.some(e => e.nullable());
+	}
+
+	public partialDerivate(c: string): Expression {
+		return new SumExpression(this.terms.map(e => e.partialDerivate(c)));
 	}
 
 }

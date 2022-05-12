@@ -1,6 +1,7 @@
 import { EmptyExpression } from "./empty-expression";
 import { Expression } from "./expression";
 import { NullExpression } from "./null-expression";
+import { ProdExpression } from "./prod-expression";
 
 export class StarExpression extends Expression {
 
@@ -52,6 +53,10 @@ export class StarExpression extends Expression {
 
 	public nullable(): boolean {
 		return true;
+	}
+
+	public partialDerivate(c: string): Expression {
+		return new ProdExpression(this.expr.partialDerivate(c), this);
 	}
 
 }

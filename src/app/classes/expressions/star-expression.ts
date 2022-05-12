@@ -50,4 +50,8 @@ export class StarExpression extends Expression {
 		return new StarExpression(this.expr.normalise());
 	}
 
+	public nullable(): boolean {
+		return true;
+	}
+
 }

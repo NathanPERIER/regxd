@@ -90,4 +90,8 @@ export class ProdExpression extends Expression {
 		return res.simplify();
 	}
 
+	public nullable(): boolean {
+		return this.left.nullable() && this.right.nullable();
+	}
+
 }

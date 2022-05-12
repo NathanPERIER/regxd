@@ -20,4 +20,8 @@ export class EmptyExpression extends Expression {
 		return 1;
 	}
 
+	public nullable(): boolean {
+		return true;
+	}
+
 }

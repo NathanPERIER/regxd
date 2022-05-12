@@ -16,4 +16,9 @@ export abstract class Expression {
 		return this;
 	}
 
+	// Indicates wether an expression can accept the empty string or not;
+	public nullable(): boolean {
+		return false;
+	}
+
 }

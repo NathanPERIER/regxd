@@ -61,7 +61,7 @@ export class SumExpression extends Expression {
 			return NullExpression.get();
 		}
 		let unique = SumExpression.uniqueTerms(tab);
-		if(unique.some(e => e instanceof StarExpression)) {
+		if(unique.some(e => e.nullable() && !(e instanceof EmptyExpression))) {
 			unique = unique.filter(e => !(e instanceof EmptyExpression));
 		}
 		if(unique.length == 1) {
@@ -100,6 +100,10 @@ export class SumExpression extends Expression {
 
 	public lconcat(l: Expression): Expression {
 		return new SumExpression(this.terms.map(e => new ProdExpression(l, e)));
+	}
+
+	public nullable(): boolean {
+		return this.terms.some(e => e.nullable());
 	}
 
 }

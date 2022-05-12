@@ -46,4 +46,8 @@ export class StarExpression extends Expression {
 		return this.expr.compareTo(se.expr);
 	}
 
+	public normalise(): Expression {
+		return new StarExpression(this.expr.normalise());
+	}
+
 }

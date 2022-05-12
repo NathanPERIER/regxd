@@ -12,4 +12,8 @@ export abstract class Expression {
 		return this.sortFactor() - e.sortFactor();
 	}
 
+	public normalise(): Expression {
+		return this;
+	}
+
 }

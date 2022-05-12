@@ -67,4 +67,27 @@ export class ProdExpression extends Expression {
 		return this.right.compareTo(pe.right);
 	}
 
+	public normalise(): Expression {
+		const l = this.left.normalise();
+		const r = this.right.normalise();
+		let res: Expression;
+		if(l instanceof SumExpression) {
+			if(l instanceof SumExpression) {
+				// (a + b)(c + d) <=> ac + ad + bc + bd
+				let se = r as SumExpression;
+				let tab = l.getTerms().map(e => se.lconcat(e));
+				res = new SumExpression(tab);
+			} else {
+				// a(b + c) <=> ab + ac
+				res = (l as SumExpression).rconcat(r)
+			}
+		} else if (r instanceof SumExpression) {
+			// (a + b)c <=> ac + bc
+			res = (r as SumExpression).lconcat(l);
+		} else {
+			return new ProdExpression(l, r);
+		}
+		return res.simplify();
+	}
+
 }
